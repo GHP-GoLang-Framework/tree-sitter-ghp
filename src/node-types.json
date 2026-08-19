@@ -1,0 +1,242 @@
+[
+  {
+    "type": "close_start",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "close_tag",
+    "named": true,
+    "fields": {
+      "content": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "go_code",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "close_start",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "control_start",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "control_tag",
+    "named": true,
+    "fields": {
+      "content": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "go_code",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "control_start",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "document",
+    "named": true,
+    "root": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "close_tag",
+          "named": true
+        },
+        {
+          "type": "control_tag",
+          "named": true
+        },
+        {
+          "type": "echo_tag",
+          "named": true
+        },
+        {
+          "type": "import_tag",
+          "named": true
+        },
+        {
+          "type": "statement_tag",
+          "named": true
+        },
+        {
+          "type": "text",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "echo_tag",
+    "named": true,
+    "fields": {
+      "content": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "go_code",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "echo_start",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "import_tag",
+    "named": true,
+    "fields": {
+      "content": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "go_code",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "import_start",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "statement_tag",
+    "named": true,
+    "fields": {
+      "content": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "go_code",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "statement_start",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "<go:case",
+    "named": false
+  },
+  {
+    "type": "<go:default",
+    "named": false
+  },
+  {
+    "type": "<go:elif",
+    "named": false
+  },
+  {
+    "type": "<go:else",
+    "named": false
+  },
+  {
+    "type": "<go:endfor",
+    "named": false
+  },
+  {
+    "type": "<go:endif",
+    "named": false
+  },
+  {
+    "type": "<go:endswitch",
+    "named": false
+  },
+  {
+    "type": "<go:for",
+    "named": false
+  },
+  {
+    "type": "<go:if",
+    "named": false
+  },
+  {
+    "type": "<go:switch",
+    "named": false
+  },
+  {
+    "type": ">",
+    "named": false
+  },
+  {
+    "type": "echo_start",
+    "named": true
+  },
+  {
+    "type": "go_code",
+    "named": true
+  },
+  {
+    "type": "import_start",
+    "named": true
+  },
+  {
+    "type": "statement_start",
+    "named": true
+  },
+  {
+    "type": "text",
+    "named": true
+  }
+]

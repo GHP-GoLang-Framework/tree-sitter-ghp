@@ -1,0 +1,157 @@
+==================
+go:import
+==================
+
+<go:import ("fmt")/>
+
+---
+
+(document
+  (text)
+  (import_tag
+    (import_start)
+    content: (go_code))
+  (text))
+
+==================
+go statement block (multi-line)
+==================
+
+<go
+    x := 1
+/>
+
+---
+
+(document
+  (text)
+  (statement_tag
+    (statement_start)
+    content: (go_code))
+  (text))
+
+==================
+go:if / go:elif / go:else / go:endif
+==================
+
+<go:if a == b/>
+yes
+<go:elif c/>
+maybe
+<go:else/>
+no
+<go:endif/>
+
+---
+
+(document
+  (text)
+  (control_tag
+    (control_start)
+    content: (go_code))
+  (text)
+  (control_tag
+    (control_start)
+    content: (go_code))
+  (text)
+  (control_tag
+    (control_start)
+    content: (go_code))
+  (text)
+  (close_tag
+    (close_start)
+    content: (go_code))
+  (text))
+
+==================
+go:switch / go:case / go:default / go:endswitch
+==================
+
+<go:switch v/>
+<go:case a/>
+x
+<go:default/>
+y
+<go:endswitch/>
+
+---
+
+(document
+  (text)
+  (control_tag
+    (control_start)
+    content: (go_code))
+  (text)
+  (control_tag
+    (control_start)
+    content: (go_code))
+  (text)
+  (control_tag
+    (control_start)
+    content: (go_code))
+  (text)
+  (close_tag
+    (close_start)
+    content: (go_code))
+  (text))
+
+==================
+go:for / go= / go:endfor
+==================
+
+<go:for _, item := range items/>
+<li><go= item /></li>
+<go:endfor/>
+
+---
+
+(document
+  (text)
+  (control_tag
+    (control_start)
+    content: (go_code))
+  (text)
+  (text)
+  (text)
+  (echo_tag
+    (echo_start)
+    content: (go_code))
+  (text)
+  (text)
+  (close_tag
+    (close_start)
+    content: (go_code))
+  (text))
+
+==================
+go= inside HTML
+==================
+
+<title><go= expr /></title>
+
+---
+
+(document
+  (text)
+  (text)
+  (text)
+  (echo_tag
+    (echo_start)
+    content: (go_code))
+  (text)
+  (text))
+
+==================
+does not mistake an HTML tag starting with "go" for a Go block
+==================
+
+<google>hi</google>
+
+---
+
+(document
+  (text)
+  (text)
+  (text)
+  (text)
+  (text))

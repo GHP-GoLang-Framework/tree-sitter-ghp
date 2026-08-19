@@ -1,0 +1,37 @@
+{
+  "name": "tree-sitter-ghp",
+  "version": "0.1.0",
+  "description": "GHP grammar for tree-sitter — HTML with <go .../> tags that embed real Go.",
+  "main": "bindings/node",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/GHP-GoLang-Framework/tree-sitter-ghp.git"
+  },
+  "keywords": [
+    "tree-sitter",
+    "ghp",
+    "go",
+    "golang",
+    "html"
+  ],
+  "devDependencies": {
+    "tree-sitter-cli": "^0.26.12"
+  },
+  "scripts": {
+    "generate": "tree-sitter generate",
+    "test": "tree-sitter test"
+  },
+  "tree-sitter": [
+    {
+      "scope": "source.ghp",
+      "file-types": [
+        "ghp"
+      ],
+      "injection-regex": "ghp"
+    }
+  ],
+  "allowScripts": {
+    "tree-sitter-cli@0.26.12": true
+  }
+}

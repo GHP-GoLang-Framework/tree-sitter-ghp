@@ -1,0 +1,23 @@
+{
+  "grammars": [
+    {
+      "name": "ghp",
+      "camelcase": "Ghp",
+      "scope": "source.ghp",
+      "path": ".",
+      "file-types": ["ghp"],
+      "injection-regex": "ghp"
+    }
+  ],
+  "metadata": {
+    "version": "0.1.0",
+    "license": "MIT",
+    "description": "GHP grammar for tree-sitter — HTML with <go .../> tags that embed real Go.",
+    "authors": [
+      { "name": "GHP Contributors" }
+    ],
+    "links": {
+      "repository": "https://github.com/GHP-GoLang-Framework/tree-sitter-ghp"
+    }
+  }
+}

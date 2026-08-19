@@ -1,0 +1,259 @@
+{
+  "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/grammar.schema.json",
+  "name": "ghp",
+  "rules": {
+    "document": {
+      "type": "REPEAT",
+      "content": {
+        "type": "SYMBOL",
+        "name": "_node"
+      }
+    },
+    "_node": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "import_tag"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "close_tag"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "control_tag"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "echo_tag"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "statement_tag"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "text"
+        }
+      ]
+    },
+    "text": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PREC",
+        "value": -1,
+        "content": {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "PATTERN",
+              "value": "[^<]+"
+            },
+            {
+              "type": "PATTERN",
+              "value": "<"
+            }
+          ]
+        }
+      }
+    },
+    "import_tag": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "import_start"
+        },
+        {
+          "type": "FIELD",
+          "name": "content",
+          "content": {
+            "type": "SYMBOL",
+            "name": "go_code"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": ">"
+        }
+      ]
+    },
+    "import_start": {
+      "type": "STRING",
+      "value": "<go:import"
+    },
+    "close_tag": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "close_start"
+        },
+        {
+          "type": "FIELD",
+          "name": "content",
+          "content": {
+            "type": "SYMBOL",
+            "name": "go_code"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": ">"
+        }
+      ]
+    },
+    "close_start": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "<go:endif"
+        },
+        {
+          "type": "STRING",
+          "value": "<go:endswitch"
+        },
+        {
+          "type": "STRING",
+          "value": "<go:endfor"
+        }
+      ]
+    },
+    "control_tag": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "control_start"
+        },
+        {
+          "type": "FIELD",
+          "name": "content",
+          "content": {
+            "type": "SYMBOL",
+            "name": "go_code"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": ">"
+        }
+      ]
+    },
+    "control_start": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "<go:if"
+        },
+        {
+          "type": "STRING",
+          "value": "<go:elif"
+        },
+        {
+          "type": "STRING",
+          "value": "<go:else"
+        },
+        {
+          "type": "STRING",
+          "value": "<go:switch"
+        },
+        {
+          "type": "STRING",
+          "value": "<go:case"
+        },
+        {
+          "type": "STRING",
+          "value": "<go:default"
+        },
+        {
+          "type": "STRING",
+          "value": "<go:for"
+        }
+      ]
+    },
+    "echo_tag": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "echo_start"
+        },
+        {
+          "type": "FIELD",
+          "name": "content",
+          "content": {
+            "type": "SYMBOL",
+            "name": "go_code"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": ">"
+        }
+      ]
+    },
+    "echo_start": {
+      "type": "STRING",
+      "value": "<go="
+    },
+    "statement_tag": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "statement_start"
+        },
+        {
+          "type": "FIELD",
+          "name": "content",
+          "content": {
+            "type": "SYMBOL",
+            "name": "go_code"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": ">"
+        }
+      ]
+    },
+    "statement_start": {
+      "type": "TOKEN",
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "STRING",
+            "value": "<go"
+          },
+          {
+            "type": "PATTERN",
+            "value": "[ \\t\\r\\n\\/]"
+          }
+        ]
+      }
+    },
+    "go_code": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PREC",
+        "value": -1,
+        "content": {
+          "type": "PATTERN",
+          "value": "[^>]+"
+        }
+      }
+    }
+  },
+  "extras": [],
+  "conflicts": [],
+  "precedences": [],
+  "externals": [],
+  "inline": [],
+  "supertypes": [],
+  "reserved": {}
+}
