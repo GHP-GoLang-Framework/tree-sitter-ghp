@@ -34,6 +34,26 @@
         },
         {
           "type": "SYMBOL",
+          "name": "html_open_tag"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "html_close_tag"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "html_self_closing_tag"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "html_comment"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "html_doctype"
+        },
+        {
+          "type": "SYMBOL",
           "name": "text"
         }
       ]
@@ -80,8 +100,12 @@
       ]
     },
     "import_start": {
-      "type": "STRING",
-      "value": "<go:import"
+      "type": "PREC",
+      "value": 2,
+      "content": {
+        "type": "STRING",
+        "value": "<go:import"
+      }
     },
     "close_tag": {
       "type": "SEQ",
@@ -105,21 +129,25 @@
       ]
     },
     "close_start": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "STRING",
-          "value": "<go:endif"
-        },
-        {
-          "type": "STRING",
-          "value": "<go:endswitch"
-        },
-        {
-          "type": "STRING",
-          "value": "<go:endfor"
-        }
-      ]
+      "type": "PREC",
+      "value": 2,
+      "content": {
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "STRING",
+            "value": "<go:endif"
+          },
+          {
+            "type": "STRING",
+            "value": "<go:endswitch"
+          },
+          {
+            "type": "STRING",
+            "value": "<go:endfor"
+          }
+        ]
+      }
     },
     "control_tag": {
       "type": "SEQ",
@@ -143,37 +171,41 @@
       ]
     },
     "control_start": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "STRING",
-          "value": "<go:if"
-        },
-        {
-          "type": "STRING",
-          "value": "<go:elif"
-        },
-        {
-          "type": "STRING",
-          "value": "<go:else"
-        },
-        {
-          "type": "STRING",
-          "value": "<go:switch"
-        },
-        {
-          "type": "STRING",
-          "value": "<go:case"
-        },
-        {
-          "type": "STRING",
-          "value": "<go:default"
-        },
-        {
-          "type": "STRING",
-          "value": "<go:for"
-        }
-      ]
+      "type": "PREC",
+      "value": 2,
+      "content": {
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "STRING",
+            "value": "<go:if"
+          },
+          {
+            "type": "STRING",
+            "value": "<go:elif"
+          },
+          {
+            "type": "STRING",
+            "value": "<go:else"
+          },
+          {
+            "type": "STRING",
+            "value": "<go:switch"
+          },
+          {
+            "type": "STRING",
+            "value": "<go:case"
+          },
+          {
+            "type": "STRING",
+            "value": "<go:default"
+          },
+          {
+            "type": "STRING",
+            "value": "<go:for"
+          }
+        ]
+      }
     },
     "echo_tag": {
       "type": "SEQ",
@@ -197,8 +229,12 @@
       ]
     },
     "echo_start": {
-      "type": "STRING",
-      "value": "<go="
+      "type": "PREC",
+      "value": 2,
+      "content": {
+        "type": "STRING",
+        "value": "<go="
+      }
     },
     "statement_tag": {
       "type": "SEQ",
@@ -224,17 +260,21 @@
     "statement_start": {
       "type": "TOKEN",
       "content": {
-        "type": "SEQ",
-        "members": [
-          {
-            "type": "STRING",
-            "value": "<go"
-          },
-          {
-            "type": "PATTERN",
-            "value": "[ \\t\\r\\n\\/]"
-          }
-        ]
+        "type": "PREC",
+        "value": 2,
+        "content": {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "<go"
+            },
+            {
+              "type": "PATTERN",
+              "value": "[ \\t\\r\\n\\/]"
+            }
+          ]
+        }
       }
     },
     "go_code": {
@@ -246,6 +286,45 @@
           "type": "PATTERN",
           "value": "[^>]+"
         }
+      }
+    },
+    "html_open_tag": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PATTERN",
+        "value": "<[a-zA-Z][a-zA-Z0-9-]*(\\s+[^>]*)?>"
+      }
+    },
+    "html_close_tag": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PATTERN",
+        "value": "<\\/[a-zA-Z][a-zA-Z0-9-]*\\s*>"
+      }
+    },
+    "html_self_closing_tag": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PREC",
+        "value": 1,
+        "content": {
+          "type": "PATTERN",
+          "value": "<[a-zA-Z][a-zA-Z0-9-]*(\\s+[^>]*)?\\/>"
+        }
+      }
+    },
+    "html_comment": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PATTERN",
+        "value": "<!--[^>]*-->"
+      }
+    },
+    "html_doctype": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PATTERN",
+        "value": "<!DOCTYPE[^>]*>"
       }
     }
   },

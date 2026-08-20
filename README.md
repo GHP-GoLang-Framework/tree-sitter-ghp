@@ -15,9 +15,20 @@ Every GHP tag becomes its own node, with the embedded Go captured as a `go_code`
 | `close_tag` | `<go:endif/>`, `<go:endswitch/>`, `<go:endfor/>` |
 | `echo_tag` | `<go= expr/>` |
 | `statement_tag` | `<go .../>` |
-| `text` | everything else (plain HTML) |
+| `html_open_tag` | `<div class="foo">` |
+| `html_close_tag` | `</div>` |
+| `html_self_closing_tag` | `<br/>`, `<br />` |
+| `html_comment` | `<!-- ... -->` |
+| `html_doctype` | `<!DOCTYPE html>` |
+| `text` | everything else (plain text between tags) |
+
+GHP tags always take priority over HTML tags — a `<go:if/>` is never mistaken for an HTML element even though `go` is a valid tag name prefix.
 
 **Known limitation** (shared with the TextMate grammar): a tag closes at the first bare `>`, so a Go comparison like `<go:if a > b/>` closes early — this is an ambiguity in the GHP syntax itself, not a grammar bug. Write `b < a` or move the comparison into a preceding `<go .../>` block instead.
+
+## Highlighting
+
+`queries/highlights.scm` provides syntax-highlighting captures for both GHP tags and HTML.  Go payloads inside tags are marked `@embedded` so editors with tree-sitter injection support (Zed, Neovim, Helix) can highlight them with a real Go grammar.
 
 ## Development
 

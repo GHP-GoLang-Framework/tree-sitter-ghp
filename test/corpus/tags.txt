@@ -111,12 +111,11 @@ go:for / go= / go:endfor
     (control_start)
     content: (go_code))
   (text)
-  (text)
-  (text)
+  (html_open_tag)
   (echo_tag
     (echo_start)
     content: (go_code))
-  (text)
+  (html_close_tag)
   (text)
   (close_tag
     (close_start)
@@ -133,12 +132,11 @@ go= inside HTML
 
 (document
   (text)
-  (text)
-  (text)
+  (html_open_tag)
   (echo_tag
     (echo_start)
     content: (go_code))
-  (text)
+  (html_close_tag)
   (text))
 
 ==================
@@ -151,7 +149,151 @@ does not mistake an HTML tag starting with "go" for a Go block
 
 (document
   (text)
+  (html_open_tag)
   (text)
+  (html_close_tag)
+  (text))
+
+==================
+HTML open tag
+==================
+
+<div class="foo" id="bar">
+
+---
+
+(document
   (text)
+  (html_open_tag)
+  (text))
+
+==================
+HTML close tag
+==================
+
+</div>
+
+---
+
+(document
   (text)
+  (html_close_tag)
+  (text))
+
+==================
+HTML self-closing tag
+==================
+
+<br/>
+
+---
+
+(document
+  (text)
+  (html_self_closing_tag)
+  (text))
+
+==================
+HTML self-closing tag with space
+==================
+
+<br />
+
+---
+
+(document
+  (text)
+  (html_self_closing_tag)
+  (text))
+
+==================
+HTML comment
+==================
+
+<!-- this is a comment -->
+
+---
+
+(document
+  (text)
+  (html_comment)
+  (text))
+
+==================
+HTML doctype
+==================
+
+<!DOCTYPE html>
+
+---
+
+(document
+  (text)
+  (html_doctype)
+  (text))
+
+==================
+HTML mixed with GHP tags
+==================
+
+<div>
+<go:if showBanner/>
+<p>Hello</p>
+<go:endif/>
+</div>
+
+---
+
+(document
+  (text)
+  (html_open_tag)
+  (text)
+  (control_tag
+    (control_start)
+    content: (go_code))
+  (text)
+  (html_open_tag)
+  (text)
+  (html_close_tag)
+  (text)
+  (close_tag
+    (close_start)
+    content: (go_code))
+  (text)
+  (html_close_tag)
+  (text))
+
+==================
+HTML tag with Go echo inside
+==================
+
+<span class="greeting"><go= name /></span>
+
+---
+
+(document
+  (text)
+  (html_open_tag)
+  (echo_tag
+    (echo_start)
+    content: (go_code))
+  (html_close_tag)
+  (text))
+
+==================
+multiple HTML tags
+==================
+
+<p>one</p><p>two</p>
+
+---
+
+(document
+  (text)
+  (html_open_tag)
+  (text)
+  (html_close_tag)
+  (html_open_tag)
+  (text)
+  (html_close_tag)
   (text))
