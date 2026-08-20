@@ -54,7 +54,7 @@ module.exports = grammar({
       field('content', $.go_code),
       '>',
     ),
-    import_start: _$ => prec(1, '<go:import'),
+    import_start: _$ => prec(2, '<go:import'),
 
     // <go:endif/>, <go:endswitch/>, <go:endfor/> — closes a block tag.
     close_tag: $ => seq(
@@ -62,7 +62,7 @@ module.exports = grammar({
       field('content', $.go_code),
       '>',
     ),
-    close_start: _$ => prec(1, choice('<go:endif', '<go:endswitch', '<go:endfor')),
+    close_start: _$ => prec(2, choice('<go:endif', '<go:endswitch', '<go:endfor')),
 
     // <go:if/>, <go:elif/>, <go:else/>, <go:switch/>, <go:case/>,
     // <go:default/>, <go:for/> — control structures. `else` and `default`
@@ -72,7 +72,7 @@ module.exports = grammar({
       field('content', $.go_code),
       '>',
     ),
-    control_start: _$ => prec(1, choice(
+    control_start: _$ => prec(2, choice(
       '<go:if', '<go:elif', '<go:else', '<go:switch', '<go:case', '<go:default', '<go:for',
     )),
 
@@ -82,7 +82,7 @@ module.exports = grammar({
       field('content', $.go_code),
       '>',
     ),
-    echo_start: _$ => prec(1, '<go='),
+    echo_start: _$ => prec(2, '<go='),
 
     // <go .../> — a block of Go code (statement), possibly multi-line.
     // Unlike the other four, "go" alone isn't a unique enough prefix (it
@@ -95,7 +95,7 @@ module.exports = grammar({
       field('content', $.go_code),
       '>',
     ),
-    statement_start: _$ => token(prec(1, seq('<go', /[ \t\r\n\/]/))),
+    statement_start: _$ => token(prec(2, seq('<go', /[ \t\r\n\/]/))),
 
     // The Go payload of a tag: everything up to the tag's closing '>',
     // always at least one character because every real tag ends in '/>'
@@ -114,7 +114,7 @@ module.exports = grammar({
     html_close_tag: $ => token(/<\/[a-zA-Z][a-zA-Z0-9-]*\s*>/),
 
     // <br/> or <br /> — self-closing HTML tag.
-    html_self_closing_tag: $ => token(/<[a-zA-Z][a-zA-Z0-9-]*(\s+[^>]*)?\/>/),
+    html_self_closing_tag: $ => token(prec(1, /<[a-zA-Z][a-zA-Z0-9-]*(\s+[^>]*)?\/>/)),
 
     // <!-- comment --> — HTML comment.
     html_comment: $ => token(/<!--[^>]*-->/),

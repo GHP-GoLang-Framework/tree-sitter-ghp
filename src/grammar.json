@@ -101,7 +101,7 @@
     },
     "import_start": {
       "type": "PREC",
-      "value": 1,
+      "value": 2,
       "content": {
         "type": "STRING",
         "value": "<go:import"
@@ -130,7 +130,7 @@
     },
     "close_start": {
       "type": "PREC",
-      "value": 1,
+      "value": 2,
       "content": {
         "type": "CHOICE",
         "members": [
@@ -172,7 +172,7 @@
     },
     "control_start": {
       "type": "PREC",
-      "value": 1,
+      "value": 2,
       "content": {
         "type": "CHOICE",
         "members": [
@@ -230,7 +230,7 @@
     },
     "echo_start": {
       "type": "PREC",
-      "value": 1,
+      "value": 2,
       "content": {
         "type": "STRING",
         "value": "<go="
@@ -261,7 +261,7 @@
       "type": "TOKEN",
       "content": {
         "type": "PREC",
-        "value": 1,
+        "value": 2,
         "content": {
           "type": "SEQ",
           "members": [
@@ -305,8 +305,12 @@
     "html_self_closing_tag": {
       "type": "TOKEN",
       "content": {
-        "type": "PATTERN",
-        "value": "<[a-zA-Z][a-zA-Z0-9-]*(\\s+[^>]*)?\\/>"
+        "type": "PREC",
+        "value": 1,
+        "content": {
+          "type": "PATTERN",
+          "value": "<[a-zA-Z][a-zA-Z0-9-]*(\\s+[^>]*)?\\/>"
+        }
       }
     },
     "html_comment": {
