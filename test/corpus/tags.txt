@@ -111,12 +111,11 @@ go:for / go= / go:endfor
     (control_start)
     content: (go_code))
   (text)
-  (text)
-  (text)
+  (html_open_tag)
   (echo_tag
     (echo_start)
     content: (go_code))
-  (text)
+  (html_close_tag)
   (text)
   (close_tag
     (close_start)
@@ -133,12 +132,11 @@ go= inside HTML
 
 (document
   (text)
-  (text)
-  (text)
+  (html_open_tag)
   (echo_tag
     (echo_start)
     content: (go_code))
-  (text)
+  (html_close_tag)
   (text))
 
 ==================
@@ -151,7 +149,7 @@ does not mistake an HTML tag starting with "go" for a Go block
 
 (document
   (text)
+  (html_open_tag)
   (text)
-  (text)
-  (text)
+  (html_close_tag)
   (text))

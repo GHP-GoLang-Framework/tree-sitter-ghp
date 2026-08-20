@@ -28,6 +28,11 @@ module.exports = grammar({
       $.control_tag,
       $.echo_tag,
       $.statement_tag,
+      $.html_open_tag,
+      $.html_close_tag,
+      $.html_self_closing_tag,
+      $.html_comment,
+      $.html_doctype,
       $.text,
     ),
 
@@ -38,6 +43,8 @@ module.exports = grammar({
     // longer, so they win via longest-match wherever they actually apply.
     text: $ => token(prec(-1, choice(/[^<]+/, /</))),
 
+    // ── GHP tags (higher priority to win over HTML) ────────────────────
+
     // <go:import ("fmt")/> — one or more Go imports. ':' immediately after
     // "go" already rules out any real HTML tag name, so this needs no
     // extra boundary check (tree-sitter's regex engine has no
@@ -47,7 +54,7 @@ module.exports = grammar({
       field('content', $.go_code),
       '>',
     ),
-    import_start: _$ => '<go:import',
+    import_start: _$ => prec(1, '<go:import'),
 
     // <go:endif/>, <go:endswitch/>, <go:endfor/> — closes a block tag.
     close_tag: $ => seq(
@@ -55,7 +62,7 @@ module.exports = grammar({
       field('content', $.go_code),
       '>',
     ),
-    close_start: _$ => choice('<go:endif', '<go:endswitch', '<go:endfor'),
+    close_start: _$ => prec(1, choice('<go:endif', '<go:endswitch', '<go:endfor')),
 
     // <go:if/>, <go:elif/>, <go:else/>, <go:switch/>, <go:case/>,
     // <go:default/>, <go:for/> — control structures. `else` and `default`
@@ -65,9 +72,9 @@ module.exports = grammar({
       field('content', $.go_code),
       '>',
     ),
-    control_start: _$ => choice(
+    control_start: _$ => prec(1, choice(
       '<go:if', '<go:elif', '<go:else', '<go:switch', '<go:case', '<go:default', '<go:for',
-    ),
+    )),
 
     // <go= expression/> — renders the expression's value, HTML-escaped.
     echo_tag: $ => seq(
@@ -75,7 +82,7 @@ module.exports = grammar({
       field('content', $.go_code),
       '>',
     ),
-    echo_start: _$ => '<go=',
+    echo_start: _$ => prec(1, '<go='),
 
     // <go .../> — a block of Go code (statement), possibly multi-line.
     // Unlike the other four, "go" alone isn't a unique enough prefix (it
@@ -88,7 +95,7 @@ module.exports = grammar({
       field('content', $.go_code),
       '>',
     ),
-    statement_start: _$ => token(seq('<go', /[ \t\r\n\/]/)),
+    statement_start: _$ => token(prec(1, seq('<go', /[ \t\r\n\/]/))),
 
     // The Go payload of a tag: everything up to the tag's closing '>',
     // always at least one character because every real tag ends in '/>'
@@ -97,5 +104,22 @@ module.exports = grammar({
     // ambiguity of the syntax itself, not a grammar bug; see the VSCode
     // extension's README for the same documented limitation.
     go_code: _$ => token(prec(-1, /[^>]+/)),
+
+    // ── HTML tags ──────────────────────────────────────────────────────
+
+    // <div class="foo"> — opening HTML tag with optional attributes.
+    html_open_tag: $ => token(/<[a-zA-Z][a-zA-Z0-9-]*(\s+[^>]*)?>/),
+
+    // </div> — closing HTML tag.
+    html_close_tag: $ => token(/<\/[a-zA-Z][a-zA-Z0-9-]*\s*>/),
+
+    // <br/> or <br /> — self-closing HTML tag.
+    html_self_closing_tag: $ => token(/<[a-zA-Z][a-zA-Z0-9-]*(\s+[^>]*)?\/>/),
+
+    // <!-- comment --> — HTML comment.
+    html_comment: $ => token(/<!--[^>]*-->/),
+
+    // <!DOCTYPE html> — HTML document type declaration.
+    html_doctype: $ => token(/<!DOCTYPE[^>]*>/),
   },
 });

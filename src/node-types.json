@@ -83,6 +83,26 @@
           "named": true
         },
         {
+          "type": "html_close_tag",
+          "named": true
+        },
+        {
+          "type": "html_comment",
+          "named": true
+        },
+        {
+          "type": "html_doctype",
+          "named": true
+        },
+        {
+          "type": "html_open_tag",
+          "named": true
+        },
+        {
+          "type": "html_self_closing_tag",
+          "named": true
+        },
+        {
           "type": "import_tag",
           "named": true
         },
@@ -96,6 +116,11 @@
         }
       ]
     }
+  },
+  {
+    "type": "echo_start",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "echo_tag",
@@ -122,6 +147,11 @@
         }
       ]
     }
+  },
+  {
+    "type": "import_start",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "import_tag",
@@ -212,7 +242,15 @@
     "named": false
   },
   {
+    "type": "<go:import",
+    "named": false
+  },
+  {
     "type": "<go:switch",
+    "named": false
+  },
+  {
+    "type": "<go=",
     "named": false
   },
   {
@@ -220,15 +258,27 @@
     "named": false
   },
   {
-    "type": "echo_start",
-    "named": true
-  },
-  {
     "type": "go_code",
     "named": true
   },
   {
-    "type": "import_start",
+    "type": "html_close_tag",
+    "named": true
+  },
+  {
+    "type": "html_comment",
+    "named": true
+  },
+  {
+    "type": "html_doctype",
+    "named": true
+  },
+  {
+    "type": "html_open_tag",
+    "named": true
+  },
+  {
+    "type": "html_self_closing_tag",
     "named": true
   },
   {
